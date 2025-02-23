@@ -12,6 +12,24 @@ channel_username = '' # канал в телеграме
 # Создание клиента
 client = TelegramClient('session_name', api_id, api_hash)
 
+async def analyze_messages(messages):
+    if not messages:
+        return
+    
+    # Подсчет средних показателей
+    total_views = sum(msg['views'] for msg in messages)
+    total_likes = sum(msg['likes'] for msg in messages)
+    total_forwards = sum(msg['forwards'] for msg in messages)
+    
+    avg_views = total_views / len(messages)
+    avg_likes = total_likes / len(messages)
+    avg_forwards = total_forwards / len(messages)
+    
+    print("\nСтатистика канала:")
+    print(f"Среднее количество просмотров: {avg_views:.2f}")
+    print(f"Среднее количество лайков: {avg_likes:.2f}")
+    print(f"Среднее количество репостов: {avg_forwards:.2f}")
+
 async def fetch_all_messages():
     try:
         await client.start()
@@ -89,44 +107,11 @@ async def fetch_all_messages():
         if client.is_connected():
             await client.disconnect()
 
-# Добавим функцию для анализа данных
-def analyze_messages(messages):
-    if not messages:
-        return
-    
-    # Подсчет средних показателей
-    total_views = sum(msg['views'] for msg in messages)
-    total_likes = sum(msg['likes'] for msg in messages)
-    total_forwards = sum(msg['forwards'] for msg in messages)
-    
-    avg_views = total_views / len(messages)
-    avg_likes = total_likes / len(messages)
-    avg_forwards = total_forwards / len(messages)
-    
-    print("\nСтатистика канала:")
-    print(f"Среднее количество просмотров: {avg_views:.2f}")
-    print(f"Среднее количество лайков: {avg_likes:.2f}")
-    print(f"Среднее количество репостов: {avg_forwards:.2f}")
-
-# Запуск асинхронной функции
 if __name__ == '__main__':
     loop = asyncio.get_event_loop()
     csv_filename, messages = loop.run_until_complete(fetch_all_messages())
 
     if csv_filename and messages:
         print(f"Сообщения сохранены в {csv_filename}")
-        # Теперь можно анализировать сообщения
-        if messages:
-            # Подсчет средних показателей
-            total_views = sum(msg['views'] for msg in messages)
-            total_likes = sum(msg['likes'] for msg in messages)
-            total_forwards = sum(msg['forwards'] for msg in messages)
-            
-            avg_views = total_views / len(messages)
-            avg_likes = total_likes / len(messages)
-            avg_forwards = total_forwards / len(messages)
-            
-            print("\nСтатистика канала:")
-            print(f"Среднее количество просмотров: {avg_views:.2f}")
-            print(f"Среднее количество лайков: {avg_likes:.2f}")
-            print(f"Среднее количество репостов: {avg_forwards:.2f}")
+        # Анализируем сообщения
+        loop.run_until_complete(analyze_messages(messages))
