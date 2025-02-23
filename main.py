@@ -1,5 +1,7 @@
 import pandas as pd
 import numpy as np
+import asyncio
+from parser import fetch_all_messages  # Убедитесь, что вы импортируете нужную функцию
 
 comment = ["Эта идея хорошо подходит для нашего проекта, молодцы!",
            "Хорошо, что вы подняли эту тему, она очень важна!",
