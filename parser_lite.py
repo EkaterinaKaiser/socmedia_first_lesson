@@ -4,9 +4,9 @@ import asyncio  # Импортируем библиотеку для асинх�
 from datetime import datetime  # Импортируем класс datetime для работы с датами
 
 # Настройки Telegram API
-api_id = 27135832  # Укажите ваш API ID
-api_hash = '2be168014f8eda22abc7bccc6c405b2c'  # Укажите ваш API Hash
-channel_username = 'oldlentach'  # Укажите имя канала в Telegram
+api_id =   # Укажите ваш API ID
+api_hash = ''  # Укажите ваш API Hash
+channel_username = ''  # Укажите имя канала в Telegram
 
 # Создание клиента для подключения к Telegram
 client = TelegramClient('session_name', api_id, api_hash)
